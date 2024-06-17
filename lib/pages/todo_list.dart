@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uts_ahmad/models/save_task.dart';
-import 'package:uts_ahmad/providers/auth_service.dart';
 
-class TodoList extends StatelessWidget {
+class TodoList extends StatefulWidget {
   const TodoList({super.key});
+
+  @override
+  State<TodoList> createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SaveTask>(context, listen: false).fetchTodos();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,5 +101,11 @@ class TodoList extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
